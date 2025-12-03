@@ -20,6 +20,7 @@ def solve(rotations):
     
     def move(value, currentposition):
         
+        counter_zeros = 0
         subtract = False
         direction = str(value[0])
         amount = int(value[1:])
@@ -29,9 +30,9 @@ def solve(rotations):
         
         for x in range(0, amount):
             if subtract:
-                currentposition-=1
+                currentposition -=1
             else:
-                currentposition+=1
+                currentposition +=1
             
             if currentposition == 100:
                 currentposition = 0
@@ -39,7 +40,11 @@ def solve(rotations):
             if currentposition == -1:
                 currentposition = 99
 
-        return currentposition
+            # Extra code for part 2
+            if currentposition == 0:
+                counter_zeros += 1
+
+        return currentposition, counter_zeros
 
 
     rotations = rotations.copy()
@@ -49,10 +54,12 @@ def solve(rotations):
     password = 0
     for rotation in rotations:
         print(f"Rotating {rotation}")
-        position = move(rotation, position)
+        position, zeros = move(rotation, position)
         print(f"New Position = {position}")
-        if position == 0:
-            password += 1
+        # This code makes the answer for part two wrong
+        # if position == 0:
+        #     password += 1
+        password += zeros
     return password
 
 
